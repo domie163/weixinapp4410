@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.JianzhiDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.shangjia_id as shangjiaId
+        ,a.jianzhi_name as jianzhiName
+        ,a.jianzhi_uuid_number as jianzhiUuidNumber
+        ,a.jianzhi_photo as jianzhiPhoto
+        ,a.zan_number as zanNumber
+        ,a.cai_number as caiNumber
+        ,a.jianzhi_types as jianzhiTypes
+        ,a.jianzhi_jiesuan_types as jianzhiJiesuanTypes
+        ,a.jianzhi_kucun_number as jianzhiKucunNumber
+        ,a.jianzhi_phone as jianzhiPhone
+        ,a.jianzhi_address as jianzhiAddress
+        ,a.jianzhi_shijian as jianzhiShijian
+        ,a.jianzhi_daiyu as jianzhiDaiyu
+        ,a.jianzhi_content as jianzhiContent
+        ,a.jianzhi_delete as jianzhiDelete
+        ,a.insert_time as insertTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.JianzhiView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+        ,shangjia.shangjia_name as shangjiaName
+        ,shangjia.shangjia_phone as shangjiaPhone
+        ,shangjia.shangjia_email as shangjiaEmail
+        ,shangjia.shangjia_address as shangjiaAddress
+        ,shangjia.shangjia_content as shangjiaContent
+        ,shangjia.shangjia_delete as shangjiaDelete
+
+        FROM jianzhi  a
+        left JOIN shangjia shangjia ON a.shangjia_id = shangjia.id
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test="params.shangjiaId != null and params.shangjiaId != ''">
+                and (
+                    a.shangjia_id = #{params.shangjiaId}
+                )
+            </if>
+            <if test=" params.jianzhiName != '' and params.jianzhiName != null and params.jianzhiName != 'null' ">
+                and a.jianzhi_name like CONCAT('%',#{params.jianzhiName},'%')
+            </if>
+            <if test=" params.jianzhiUuidNumber != '' and params.jianzhiUuidNumber != null and params.jianzhiUuidNumber != 'null' ">
+                and a.jianzhi_uuid_number like CONCAT('%',#{params.jianzhiUuidNumber},'%')
+            </if>
+            <if test="params.zanNumberStart != null and params.zanNumberStart != ''">
+                <![CDATA[  and a.zan_number >= #{params.zanNumberStart}   ]]>
+            </if>
+            <if test="params.zanNumberEnd != null and params.zanNumberEnd != ''">
+                <![CDATA[  and a.zan_number <= #{params.zanNumberEnd}   ]]>
+            </if>
+             <if test="params.zanNumber != null and params.zanNumber != ''">
+                and a.zan_number = #{params.zanNumber}
+             </if>
+            <if test="params.caiNumberStart != null and params.caiNumberStart != ''">
+                <![CDATA[  and a.cai_number >= #{params.caiNumberStart}   ]]>
+            </if>
+            <if test="params.caiNumberEnd != null and params.caiNumberEnd != ''">
+                <![CDATA[  and a.cai_number <= #{params.caiNumberEnd}   ]]>
+            </if>
+             <if test="params.caiNumber != null and params.caiNumber != ''">
+                and a.cai_number = #{params.caiNumber}
+             </if>
+            <if test="params.jianzhiTypes != null and params.jianzhiTypes != ''">
+                and a.jianzhi_types = #{params.jianzhiTypes}
+            </if>
+            <if test="params.jianzhiJiesuanTypes != null and params.jianzhiJiesuanTypes != ''">
+                and a.jianzhi_jiesuan_types = #{params.jianzhiJiesuanTypes}
+            </if>
+            <if test="params.jianzhiKucunNumberStart != null and params.jianzhiKucunNumberStart != ''">
+                <![CDATA[  and a.jianzhi_kucun_number >= #{params.jianzhiKucunNumberStart}   ]]>
+            </if>
+            <if test="params.jianzhiKucunNumberEnd != null and params.jianzhiKucunNumberEnd != ''">
+                <![CDATA[  and a.jianzhi_kucun_number <= #{params.jianzhiKucunNumberEnd}   ]]>
+            </if>
+             <if test="params.jianzhiKucunNumber != null and params.jianzhiKucunNumber != ''">
+                and a.jianzhi_kucun_number = #{params.jianzhiKucunNumber}
+             </if>
+            <if test=" params.jianzhiPhone != '' and params.jianzhiPhone != null and params.jianzhiPhone != 'null' ">
+                and a.jianzhi_phone like CONCAT('%',#{params.jianzhiPhone},'%')
+            </if>
+            <if test=" params.jianzhiAddress != '' and params.jianzhiAddress != null and params.jianzhiAddress != 'null' ">
+                and a.jianzhi_address like CONCAT('%',#{params.jianzhiAddress},'%')
+            </if>
+            <if test=" params.jianzhiShijian != '' and params.jianzhiShijian != null and params.jianzhiShijian != 'null' ">
+                and a.jianzhi_shijian like CONCAT('%',#{params.jianzhiShijian},'%')
+            </if>
+            <if test=" params.jianzhiDaiyu != '' and params.jianzhiDaiyu != null and params.jianzhiDaiyu != 'null' ">
+                and a.jianzhi_daiyu like CONCAT('%',#{params.jianzhiDaiyu},'%')
+            </if>
+            <if test=" params.jianzhiContent != '' and params.jianzhiContent != null and params.jianzhiContent != 'null' ">
+                and a.jianzhi_content like CONCAT('%',#{params.jianzhiContent},'%')
+            </if>
+            <if test="params.jianzhiDeleteStart != null and params.jianzhiDeleteStart != ''">
+                <![CDATA[  and a.jianzhi_delete >= #{params.jianzhiDeleteStart}   ]]>
+            </if>
+            <if test="params.jianzhiDeleteEnd != null and params.jianzhiDeleteEnd != ''">
+                <![CDATA[  and a.jianzhi_delete <= #{params.jianzhiDeleteEnd}   ]]>
+            </if>
+             <if test="params.jianzhiDelete != null and params.jianzhiDelete != ''">
+                and a.jianzhi_delete = #{params.jianzhiDelete}
+             </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+
+                <!-- 判断商家的id不为空 -->
+            <if test=" params.shangjiaIdNotNull != '' and params.shangjiaIdNotNull != null and params.shangjiaIdNotNull != 'null' ">
+                and a.shangjia_id IS NOT NULL
+            </if>
+            <if test=" params.shangjiaName != '' and params.shangjiaName != null and params.shangjiaName != 'null' ">
+                and shangjia.shangjia_name like CONCAT('%',#{params.shangjiaName},'%')
+            </if>
+            <if test=" params.shangjiaPhone != '' and params.shangjiaPhone != null and params.shangjiaPhone != 'null' ">
+                and shangjia.shangjia_phone like CONCAT('%',#{params.shangjiaPhone},'%')
+            </if>
+            <if test=" params.shangjiaEmail != '' and params.shangjiaEmail != null and params.shangjiaEmail != 'null' ">
+                and shangjia.shangjia_email like CONCAT('%',#{params.shangjiaEmail},'%')
+            </if>
+            <if test=" params.shangjiaAddress != '' and params.shangjiaAddress != null and params.shangjiaAddress != 'null' ">
+                and shangjia.shangjia_address like CONCAT('%',#{params.shangjiaAddress},'%')
+            </if>
+            <if test=" params.shangjiaContent != '' and params.shangjiaContent != null and params.shangjiaContent != 'null' ">
+                and shangjia.shangjia_content like CONCAT('%',#{params.shangjiaContent},'%')
+            </if>
+            <if test="params.shangjiaDeleteStart != null  and params.shangjiaDeleteStart != '' ">
+                <![CDATA[  and shangjia.shangjia_delete >= #{params.shangjiaDeleteStart}   ]]>
+            </if>
+            <if test="params.shangjiaDeleteEnd != null  and params.shangjiaDeleteEnd != '' ">
+                <![CDATA[  and shangjia.shangjia_delete <= #{params.shangjiaDeleteEnd}   ]]>
+            </if>
+            <if test="params.shangjiaDelete != null  and params.shangjiaDelete != '' ">
+                and shangjia.shangjia_delete = #{params.shangjiaDelete}
+            </if>
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>

@@ -1,0 +1,8 @@
+{
+  "navigationBarBackgroundColor": "#93a5cf",
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "大学生校园兼职首页",
+  "usingComponents": {
+    "uni-icons": "/components/uni-ui/lib/uni-icons/uni-icons"
+  }
+}

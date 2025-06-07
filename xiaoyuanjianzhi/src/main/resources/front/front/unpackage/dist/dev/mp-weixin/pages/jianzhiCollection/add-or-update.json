@@ -1,0 +1,8 @@
+{
+  "navigationBarBackgroundColor": "#93a5cf",
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "兼职收藏添加/修改",
+  "usingComponents": {
+    "w-picker": "/components/w-picker/w-picker"
+  }
+}

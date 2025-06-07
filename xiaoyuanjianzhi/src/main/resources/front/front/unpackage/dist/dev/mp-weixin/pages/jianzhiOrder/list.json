@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "兼职申请",
+  "usingComponents": {
+    "mescroll-uni": "/components/mescroll-uni/mescroll-uni"
+  }
+}

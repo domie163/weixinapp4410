@@ -1,0 +1,8 @@
+{
+  "navigationBarBackgroundColor": "#93a5cf",
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "我的兼职收藏",
+  "usingComponents": {
+    "mescroll-uni": "/components/mescroll-uni/mescroll-uni"
+  }
+}
